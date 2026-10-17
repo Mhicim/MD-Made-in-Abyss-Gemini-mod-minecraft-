@@ -1,0 +1,63 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+version = '1.0.0-1.20.1'
+group = 'com.example.abyss'
+
+base {
+    archivesName = 'abyss_core'
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+    copyIdeResources = true
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                abyss_core {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                abyss_core {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.2.20'
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+            minecraft_version: '1.20.1', minecraft_version_range: '[1.20.1,1.21)',
+            forge_version: '47.2.20', forge_version_range: '[47,)',
+            loader_version_range: '[47,)',
+            mod_id: 'abyss_core', mod_name: 'Made in Abyss: Modular Depth',
+            mod_license: 'MIT', mod_version: '1.0.0',
+            mod_authors: 'AbyssArchitect',
+            mod_description: 'Procedural 4000-block deep Abyss dimension with dynamic cross-mod biome/mob/structure pooling, colossal 1000-block trees, Relics, Cartridges, and the Curse of the Abyss.'
+    ]
+    inputs.properties replaceProperties
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
+}

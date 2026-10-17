@@ -1,0 +1,14 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="abyss_core"
+version="1.0.0"
+displayName="Made in Abyss: Modular Depth"
+authors="AbyssArchitect"
+description='''
+Procedural 4064-block vertical world (-2032 to +2032) inspired by Made in Abyss.
+Automatically integrates biomes, mobs, and structures from ALL installed mods into 7 distinct layers (10 biomes, 20 mobs, 10 structures per layer).
+Features bedrock hatch spawn tethered to the nearest cliff surface, 200-1000 block colossal hollow trees, Relics, Whistles, Cartridges, and dynamic Abyssal events.
+'''
