@@ -1,0 +1,34 @@
+name: Build Abyss Mod JAR
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch: # Позволяет запускать сборку вручную кнопкой
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Скачивание исходного кода
+        uses: actions/checkout@v4
+
+      - name: 2. Установка Java 17 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: 3. Установка Gradle 8.5 и кэширование Forge
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.5'
+
+      - name: 4. Компиляция мода в .jar
+        run: gradle build --no-daemon
+
+      - name: 5. Выгрузка готового мода (Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Made-In-Abyss-Mod-1.20.1
+          path: build/libs/*.jar
